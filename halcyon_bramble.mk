@@ -14,6 +14,12 @@
 # limitations under the License.
 #
 
+$(call inherit-product, device/google/redbull/device-halcyon.mk)
+
+# HBM
+PRODUCT_PACKAGES += \
+    HbmSVManagerOverlay
+
 #
 # All components inherited here go to system image
 #
@@ -55,17 +61,30 @@ ifneq (REL,$(PLATFORM_VERSION_CODENAME))
   PRODUCT_PACKAGES += com.android.vndk.current.on_vendor
 endif
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2340
+TARGET_SCREEN_WIDTH := 1080
+
 # Don't build super.img.
 PRODUCT_BUILD_SUPER_PARTITION := false
-
-# b/113232673 STOPSHIP deal with Qualcomm stuff later
-# PRODUCT_RESTRICT_VENDOR_FILES := all
 
 # b/189477034: Bypass build time check on uses_libs until vendor fixes all their apps
 PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 
+# Disable EPPE
+TARGET_DISABLE_EPPE := true
+
+# Device identifier. This must come after all inclusions
+PRODUCT_BRAND := google
+PRODUCT_MODEL := Pixel 4a (5G)
+PRODUCT_NAME := halcyon_bramble
 PRODUCT_MANUFACTURER := Google
-PRODUCT_BRAND := Android
-PRODUCT_NAME := aosp_bramble
 PRODUCT_DEVICE := bramble
-PRODUCT_MODEL := AOSP on bramble
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    TARGET_PRODUCT=bramble \
+    PRIVATE_BUILD_DESC="bramble-user 13 TQ3A.230901.001 10750268 release-keys"
+
+BUILD_FINGERPRINT := google/bramble/bramble:13/TQ3A.230901.001/10750268:user/release-keys
+
+$(call inherit-product, vendor/google/bramble/bramble-vendor.mk)
