@@ -10,7 +10,6 @@ $(call inherit-product, vendor/halcyon/config/common.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/google/bramble/aosp_bramble.mk)
-$(call inherit-product, device/google/redbull/lineage_common.mk)
 
 include device/google/bramble/device-lineage.mk
 
